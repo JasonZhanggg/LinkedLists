@@ -1,0 +1,62 @@
+#include <iostream>
+#include <cstring>
+#include "Student.h"
+#include "Node.h"
+using namespace std;
+void print(Node*);
+void printStudent(Student*);
+void add(Student*, Node*);
+
+int main(){
+  Node* head;
+  add(new Student("Joe", "Mama", 2134, 2.4), head);
+  print(head);
+}
+void add(Student* newStudent, Node* head){
+  Node* current = head;
+  if(head == NULL){
+    head = new Node(newStudent);
+    return;
+  }
+  
+  while(current->getNext != NULL){
+    current = current->getNext();
+  }
+  add(newStudent, current);
+  return;
+}
+void print(Node* head){
+  Node* next = head;
+  if(head == next){
+    cout<<"List: "<<endl;
+  }
+  if(next != NULL){
+    printStudent(next->getStudent);
+    print(next->getNext());
+  }
+}
+void printStudent(Student* student){
+  cout<<"Student: "<<student->getFirstName()<<" "<<student->getLastName()<< ", Id: "<<student->getId()<<", GPA: "<<student->getGpa()<<endl;
+}
+
+#include <iostream>
+#include <cstring>
+#include "Student.h"
+
+#ifndef NODE_H
+#define NODE_H
+
+using namespace std;
+
+class Node{
+ public:
+  Node(Student*);
+  Student* getStudent();
+  void setNext(Node*);
+  Node* getNext();
+  ~Node();
+ private:
+  Student* student;
+  Node* next;
+};
+#endif

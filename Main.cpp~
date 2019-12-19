@@ -1,0 +1,51 @@
+/*
+Jason Zhang
+12/19/2019
+Linked Lists
+*/
+#include <iostream>
+#include <cstring>
+#include "Student.h"
+#include "Node.h"
+using namespace std;
+void print(Node*, Node*);
+void printStudent(Student*);
+void add(Student*, Node**);
+
+int main(){
+  //Declaring the head of the list
+  Node* head;
+  add(new Student("Jason", "Zhang", 12345, 5.5), &head);
+  add(new Student("Gregory", "Feng", 23131, 5.5), &head);
+  add(new Student("Bob", "Bob", 12312, 22.2), &head);
+  print(head, head);
+  add(new Student("Joe", "Joe", 12312, 2.2), &head);
+  print(head, head);
+}
+
+void add(Student* newStudent, Node** head){
+  Node** current = head;
+  //if the head is null, declare it
+  if(*head == NULL){
+    *head = new Node(newStudent);
+    return;
+  }
+  while((*current)->getNext() != NULL){
+    Node* temp = (*current)->getNext();
+    current = &temp;
+  }
+  (*current)->setNext(new Node(newStudent));
+}
+void print(Node* next, Node* head){
+  if(head == next){
+    cout<<"List: "<<endl;
+  }
+  if(next != NULL){
+    printStudent(next->getStudent());
+    print(next->getNext(), head);
+  }
+}
+void printStudent(Student* student){
+  cout<<"Student: "<<student->getFirstName()<<" "<<student->getLastName()<< ", Id: "<<student->getId()<<", GPA: "<<student->getGpa()<<endl;
+}
+
